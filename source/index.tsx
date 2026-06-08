@@ -1,6 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { Menu, Bell, User, Clock, ChevronLeft, ChevronRight, Building2, Camera, Truck, AlertTriangle, TrendingUp, Eye, Play, Pause, Volume2, Maximize, Search, Filter, Download, ArrowLeft, MapPin, Calendar, LayoutDashboard, FileText, Video, Settings } from 'lucide-react';
 import './tw.css';
+import { PrototypeAnnotation } from './components/PrototypeAnnotation';
+import { AnnotationViewer } from '@axhub/annotation';
+import type { AnnotationDirectoryRouteNode, AnnotationSourceDocument, AnnotationViewerOptions } from '@axhub/annotation';
+import annotationSourceDocument from './annotation-source.json';
 
 // 路由管理
 type PageType =
@@ -83,24 +87,38 @@ const App: React.FC = () => {
     }
   };
 
+  const annotationOptions = useMemo<AnnotationViewerOptions>(() => ({
+    showToolbar: true,
+    showThemeToggle: true,
+    showColorFilter: true,
+    emptyWhenNoData: false,
+    toolbarEdge: 'right',
+    currentPageId: currentPage,
+    onDirectoryRoute: (node: AnnotationDirectoryRouteNode) => {
+      if (typeof node.route === 'string') {
+        setCurrentPage(node.route as PageType);
+      }
+    },
+  }), [currentPage]);
+
   return (
-    <div className="flex h-screen bg-slate-50">
+    <div className="flex h-screen bg-white">
       {/* 左侧菜单 */}
       <aside
-        className={`bg-white border-r border-slate-200 transition-all duration-200 flex flex-col ${
+        className={`bg-white border-r border-[#dee1e6] transition-all duration-200 flex flex-col ${
           sidebarCollapsed ? 'w-16' : 'w-56'
         }`}
       >
-        <div className="flex items-center justify-between px-3 py-3.5 border-b border-slate-200 min-h-[57px]">
+        <div className="flex items-center justify-between px-3 py-3.5 border-b border-[#dee1e6] min-h-[64px]">
           {!sidebarCollapsed && (
-            <span className="text-xs font-medium text-slate-600 uppercase tracking-wide">系统菜单</span>
+            <span className="text-xs font-medium text-[#5b616e] uppercase tracking-wide">系统菜单</span>
           )}
           <button
             onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
-            className="p-1.5 hover:bg-slate-100 rounded transition-colors"
+            className="p-1.5 hover:bg-[#eef0f3] rounded transition-colors"
             aria-label={sidebarCollapsed ? '展开菜单' : '收起菜单'}
           >
-            {sidebarCollapsed ? <ChevronRight size={16} className="text-slate-600" /> : <ChevronLeft size={16} className="text-slate-600" />}
+            {sidebarCollapsed ? <ChevronRight size={16} className="text-[#5b616e]" /> : <ChevronLeft size={16} className="text-[#5b616e]" />}
           </button>
         </div>
 
@@ -112,14 +130,14 @@ const App: React.FC = () => {
               <button
                 key={item.id}
                 onClick={() => setCurrentPage(item.id as PageType)}
-                className={`w-full flex items-center gap-2.5 px-3 py-2 text-left transition-all duration-150 ${
+                className={`w-full flex items-center gap-2.5 px-3 py-2.5 text-left transition-all duration-150 ${
                   isActive
-                    ? 'bg-blue-50 text-blue-700 border-r-2 border-blue-600'
-                    : 'text-slate-700 hover:bg-slate-50 hover:text-slate-900'
+                    ? 'bg-[#f0f6ff] text-[#0052ff] border-r-2 border-[#0052ff]'
+                    : 'text-[#0a0b0d] hover:bg-[#f7f7f7]'
                 }`}
                 title={sidebarCollapsed ? item.label : undefined}
               >
-                <Icon size={18} className={isActive ? 'text-blue-600' : 'text-slate-500'} />
+                <Icon size={18} className={isActive ? 'text-[#0052ff]' : 'text-[#5b616e]'} />
                 {!sidebarCollapsed && (
                   <span className="text-sm font-medium">{item.label}</span>
                 )}
@@ -132,41 +150,46 @@ const App: React.FC = () => {
       {/* 主内容区 */}
       <div className="flex-1 flex flex-col overflow-hidden">
         {/* 顶部导航栏 */}
-        <header className="bg-white border-b border-slate-200 px-5 py-3 flex items-center justify-between min-h-[57px]">
+        <header className="bg-white border-b border-[#dee1e6] px-5 py-3.5 flex items-center justify-between min-h-[64px]">
           <div className="flex items-center gap-3">
-            <h1 className="text-base font-semibold text-slate-900">
+            <h1 className="text-base font-semibold text-[#0a0b0d]">
               新余交通治超综合监管平台
             </h1>
           </div>
 
           <div className="flex items-center gap-4">
-            <div className="flex items-center gap-1.5 text-xs text-slate-600 font-mono">
+            <div className="flex items-center gap-1.5 text-xs text-[#5b616e] font-mono">
               <Clock size={14} />
               <span>{formatTime(currentTime)}</span>
             </div>
 
             <button
-              className="relative p-1.5 hover:bg-slate-100 rounded transition-colors"
+              className="relative p-1.5 hover:bg-[#eef0f3] rounded transition-colors"
               aria-label="通知"
             >
-              <Bell size={18} className="text-slate-600" />
-              <span className="absolute top-1 right-1 w-1.5 h-1.5 bg-red-500 rounded-full"></span>
+              <Bell size={18} className="text-[#5b616e]" />
+              <span className="absolute top-1 right-1 w-1.5 h-1.5 bg-[#cf202f] rounded-full"></span>
             </button>
 
-            <div className="flex items-center gap-2 pl-3 border-l border-slate-200">
-              <div className="w-7 h-7 bg-blue-100 rounded-full flex items-center justify-center">
-                <User size={14} className="text-blue-600" />
+            <div className="flex items-center gap-2 pl-3 border-l border-[#dee1e6]">
+              <div className="w-7 h-7 bg-[#eef0f3] rounded-full flex items-center justify-center">
+                <User size={14} className="text-[#5b616e]" />
               </div>
-              <span className="text-sm text-slate-700">管理员</span>
+              <span className="text-sm text-[#0a0b0d]">管理员</span>
             </div>
           </div>
         </header>
 
         {/* 页面内容 */}
-        <main className="flex-1 overflow-auto bg-slate-50">
+        <main className="flex-1 overflow-auto bg-[#f7f7f7]">
           {renderPage()}
         </main>
       </div>
+
+      <AnnotationViewer
+        source={annotationSourceDocument as AnnotationSourceDocument}
+        options={annotationOptions}
+      />
     </div>
   );
 };
@@ -175,12 +198,12 @@ const App: React.FC = () => {
 
 const DashboardPage: React.FC<{ onNavigate: (page: PageType) => void }> = ({ onNavigate }) => {
   const stats = [
-    { label: '重点企业数量', value: '15', unit: '家', icon: Building2, color: 'blue' },
-    { label: '接入摄像头数量', value: '128', unit: '个', icon: Camera, color: 'green' },
-    { label: '今日货车通行量', value: '2,847', unit: '辆', icon: Truck, color: 'slate' },
-    { label: '超限车辆数量', value: '43', unit: '辆', icon: AlertTriangle, color: 'amber' },
-    { label: '黑名单预警数量', value: '8', unit: '次', icon: AlertTriangle, color: 'red' },
-    { label: '遮挡号牌研判数量', value: '12', unit: '个', icon: Eye, color: 'orange' },
+    { label: '重点企业数量', value: '15', unit: '家', icon: Building2, color: 'primary' },
+    { label: '接入摄像头数量', value: '128', unit: '个', icon: Camera, color: 'primary' },
+    { label: '今日货车通行量', value: '2,847', unit: '辆', icon: Truck, color: 'neutral' },
+    { label: '超限车辆数量', value: '43', unit: '辆', icon: AlertTriangle, color: 'warning' },
+    { label: '黑名单预警数量', value: '8', unit: '次', icon: AlertTriangle, color: 'danger' },
+    { label: '遮挡号牌研判数量', value: '12', unit: '个', icon: Eye, color: 'warning' },
   ];
 
   const recentAlerts = [
@@ -202,22 +225,21 @@ const DashboardPage: React.FC<{ onNavigate: (page: PageType) => void }> = ({ onN
   return (
     <div className="p-5 max-w-[1600px] mx-auto">
       {/* 核心指标卡片 */}
-      <div className="grid grid-cols-3 gap-4 mb-5">
+      <div className="grid grid-cols-3 gap-4 mb-5" data-annotation-id="dashboard-stats">
         {stats.map((stat, index) => {
           const Icon = stat.icon;
-          const colorConfig = {
-            blue: { bg: 'bg-blue-50', border: 'border-blue-200', icon: 'text-blue-600', text: 'text-blue-700' },
-            green: { bg: 'bg-emerald-50', border: 'border-emerald-200', icon: 'text-emerald-600', text: 'text-emerald-700' },
-            slate: { bg: 'bg-slate-50', border: 'border-slate-200', icon: 'text-slate-600', text: 'text-slate-700' },
-            amber: { bg: 'bg-amber-50', border: 'border-amber-200', icon: 'text-amber-600', text: 'text-amber-700' },
-            red: { bg: 'bg-red-50', border: 'border-red-200', icon: 'text-red-600', text: 'text-red-700' },
-            orange: { bg: 'bg-orange-50', border: 'border-orange-200', icon: 'text-orange-600', text: 'text-orange-700' },
-          }[stat.color as keyof typeof colorConfig];
+          const colorMap = {
+            primary: { bg: 'bg-[#f0f6ff]', border: 'border-[#0052ff]/20', icon: 'text-[#0052ff]', text: 'text-[#0052ff]' },
+            neutral: { bg: 'bg-[#f7f7f7]', border: 'border-[#dee1e6]', icon: 'text-[#5b616e]', text: 'text-[#0a0b0d]' },
+            warning: { bg: 'bg-[#fff9e6]', border: 'border-[#f4b000]/20', icon: 'text-[#f4b000]', text: 'text-[#f4b000]' },
+            danger: { bg: 'bg-[#fff0f0]', border: 'border-[#cf202f]/20', icon: 'text-[#cf202f]', text: 'text-[#cf202f]' },
+          };
+          const colorConfig = colorMap[stat.color as keyof typeof colorMap];
 
           return (
             <div
               key={index}
-              className={`${colorConfig.bg} border ${colorConfig.border} rounded-lg p-4 transition-all duration-200 hover:shadow-sm`}
+              className={`${colorConfig.bg} border ${colorConfig.border} rounded-xl p-4 transition-all duration-200 hover:shadow-sm`}
             >
               <div className="flex items-start justify-between mb-3">
                 <span className="text-xs font-medium text-slate-600">{stat.label}</span>
@@ -234,33 +256,33 @@ const DashboardPage: React.FC<{ onNavigate: (page: PageType) => void }> = ({ onN
 
       <div className="grid grid-cols-2 gap-5">
         {/* 实时预警 */}
-        <div className="bg-white border border-slate-200 rounded-lg">
-          <div className="px-4 py-3 border-b border-slate-200">
-            <h3 className="text-sm font-semibold text-slate-900">实时预警</h3>
+        <div className="bg-white border border-[#dee1e6] rounded-xl" data-annotation-id="alert-list">
+          <div className="px-4 py-3 border-b border-[#dee1e6]">
+            <h3 className="text-sm font-semibold text-[#0a0b0d]">实时预警</h3>
           </div>
           <div className="p-4">
             <div className="space-y-2.5">
               {recentAlerts.map((alert, index) => (
-                <div key={index} className="flex items-center justify-between py-2.5 border-b border-slate-100 last:border-0 hover:bg-slate-50 -mx-2 px-2 rounded transition-colors">
+                <div key={index} className="flex items-center justify-between py-2.5 border-b border-[#eef0f3] last:border-0 hover:bg-[#f7f7f7] -mx-2 px-2 rounded-lg transition-colors">
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2 mb-1">
-                      <span className={`px-1.5 py-0.5 rounded text-xs font-medium whitespace-nowrap ${
-                        alert.type === '超限预警' ? 'bg-amber-100 text-amber-700' :
-                        alert.type === '黑名单预警' ? 'bg-red-100 text-red-700' :
-                        'bg-orange-100 text-orange-700'
+                      <span className={`px-2 py-0.5 rounded-full text-xs font-medium whitespace-nowrap ${
+                        alert.type === '超限预警' ? 'bg-[#fff9e6] text-[#f4b000]' :
+                        alert.type === '黑名单预警' ? 'bg-[#fff0f0] text-[#cf202f]' :
+                        'bg-[#fff9e6] text-[#f4b000]'
                       }`}>
                         {alert.type}
                       </span>
-                      <span className="text-sm font-medium text-slate-900 font-mono">{alert.vehicle}</span>
+                      <span className="text-sm font-medium text-[#0a0b0d] font-mono">{alert.vehicle}</span>
                     </div>
-                    <div className="text-xs text-slate-500">{alert.location}</div>
+                    <div className="text-xs text-[#5b616e]">{alert.location}</div>
                   </div>
                   <div className="text-right ml-3">
-                    <div className="text-xs text-slate-500 mb-1 font-mono tabular-nums">{alert.time}</div>
-                    <span className={`inline-block px-1.5 py-0.5 rounded text-xs font-medium ${
-                      alert.status === '待处理' ? 'bg-slate-100 text-slate-700' :
-                      alert.status === '处理中' ? 'bg-blue-100 text-blue-700' :
-                      'bg-emerald-100 text-emerald-700'
+                    <div className="text-xs text-[#5b616e] mb-1 font-mono tabular-nums">{alert.time}</div>
+                    <span className={`inline-block px-2 py-0.5 rounded-full text-xs font-medium ${
+                      alert.status === '待处理' ? 'bg-[#f7f7f7] text-[#5b616e]' :
+                      alert.status === '处理中' ? 'bg-[#f0f6ff] text-[#0052ff]' :
+                      'bg-[#e6f7f0] text-[#05b169]'
                     }`}>
                       {alert.status}
                     </span>
@@ -272,29 +294,29 @@ const DashboardPage: React.FC<{ onNavigate: (page: PageType) => void }> = ({ onN
         </div>
 
         {/* 企业违法排行 */}
-        <div className="bg-white border border-slate-200 rounded-lg">
-          <div className="px-4 py-3 border-b border-slate-200">
-            <h3 className="text-sm font-semibold text-slate-900">企业违法排行（本月）</h3>
+        <div className="bg-white border border-[#dee1e6] rounded-xl" data-annotation-id="enterprise-ranking">
+          <div className="px-4 py-3 border-b border-[#dee1e6]">
+            <h3 className="text-sm font-semibold text-[#0a0b0d]">企业违法排行（本月）</h3>
           </div>
           <div className="p-4">
             <div className="space-y-3">
               {topEnterprises.map((enterprise, index) => (
-                <div key={index} className="flex items-center gap-3 hover:bg-slate-50 -mx-2 px-2 py-1.5 rounded transition-colors">
-                  <div className={`w-6 h-6 rounded flex items-center justify-center text-xs font-semibold ${
-                    index === 0 ? 'bg-red-100 text-red-700' :
-                    index === 1 ? 'bg-orange-100 text-orange-700' :
-                    index === 2 ? 'bg-amber-100 text-amber-700' :
-                    'bg-slate-100 text-slate-600'
+                <div key={index} className="flex items-center gap-3 hover:bg-[#f7f7f7] -mx-2 px-2 py-1.5 rounded-lg transition-colors">
+                  <div className={`w-6 h-6 rounded-md flex items-center justify-center text-xs font-semibold ${
+                    index === 0 ? 'bg-[#fff0f0] text-[#cf202f]' :
+                    index === 1 ? 'bg-[#fff9e6] text-[#f4b000]' :
+                    index === 2 ? 'bg-[#fff9e6] text-[#f4b000]' :
+                    'bg-[#f7f7f7] text-[#5b616e]'
                   }`}>
                     {index + 1}
                   </div>
                   <div className="flex-1 min-w-0">
-                    <div className="text-sm text-slate-900 mb-0.5 truncate">{enterprise.name}</div>
+                    <div className="text-sm text-[#0a0b0d] mb-0.5 truncate">{enterprise.name}</div>
                     <div className="flex items-center gap-1.5">
-                      <span className="text-xs text-slate-500">违法次数:</span>
-                      <span className="text-xs font-semibold text-red-600 tabular-nums">{enterprise.violations}</span>
-                      {enterprise.trend === 'up' && <TrendingUp size={12} className="text-red-500" />}
-                      {enterprise.trend === 'down' && <TrendingUp size={12} className="text-emerald-500 rotate-180" />}
+                      <span className="text-xs text-[#5b616e]">违法次数:</span>
+                      <span className="text-xs font-semibold text-[#cf202f] tabular-nums">{enterprise.violations}</span>
+                      {enterprise.trend === 'up' && <TrendingUp size={12} className="text-[#cf202f]" />}
+                      {enterprise.trend === 'down' && <TrendingUp size={12} className="text-[#05b169] rotate-180" />}
                     </div>
                   </div>
                 </div>
@@ -317,14 +339,52 @@ const DashboardPage: React.FC<{ onNavigate: (page: PageType) => void }> = ({ onN
             <button
               key={index}
               onClick={() => onNavigate(item.page as PageType)}
-              className="bg-white border border-slate-200 rounded-lg p-4 hover:border-blue-300 hover:shadow-sm transition-all text-left group"
+              className="bg-white border border-[#dee1e6] rounded-xl p-4 hover:border-[#0052ff] hover:shadow-sm transition-all text-left group"
             >
-              <Icon className="text-slate-400 group-hover:text-blue-600 mb-2 transition-colors" size={20} />
-              <div className="text-sm font-medium text-slate-900">{item.label}</div>
+              <Icon className="text-[#5b616e] group-hover:text-[#0052ff] mb-2 transition-colors" size={20} />
+              <div className="text-sm font-medium text-[#0a0b0d]">{item.label}</div>
             </button>
           );
         })}
       </div>
+
+      <PrototypeAnnotation
+        pageName="首页驾驶舱"
+        pageDescription="展示新余交通治超综合监管平台的核心数据指标和实时预警信息，为管理人员提供全局监控视图。"
+        interactions={[
+          {
+            element: '核心指标卡片',
+            action: '点击卡片',
+            result: '进入对应功能详情页（如点击"重点企业数量"进入源头管控页面）'
+          },
+          {
+            element: '实时预警列表项',
+            action: '点击预警记录',
+            result: '跳转到对应的详情页面（如遮挡研判详情、黑名单详情）'
+          },
+          {
+            element: '快捷入口卡片',
+            action: '点击卡片',
+            result: '快速进入对应功能模块'
+          }
+        ]}
+        states={[
+          {
+            name: '预警状态',
+            description: '待处理（灰色）、处理中（蓝色）、已完成（绿色）'
+          },
+          {
+            name: '预警类型',
+            description: '超限预警（黄色）、黑名单预警（红色）、遮挡号牌（黄色）'
+          }
+        ]}
+        notes={[
+          '数据每30秒自动刷新一次',
+          '右上角显示当前系统时间',
+          '核心指标采用 Coinbase Blue 作为主色调',
+          '企业违法排行按本月违法次数降序排列'
+        ]}
+      />
     </div>
   );
 };
@@ -344,26 +404,26 @@ const SourceControlPage: React.FC<{ onNavigate: (page: PageType) => void }> = ({
   return (
     <div className="p-5 max-w-[1600px] mx-auto">
       <div className="mb-5">
-        <h2 className="text-lg font-semibold text-slate-900">源头管控</h2>
-        <p className="text-xs text-slate-600 mt-0.5">监管新余市重点企业车辆运输情况</p>
+        <h2 className="text-lg font-semibold text-[#0a0b0d]">源头管控</h2>
+        <p className="text-xs text-[#5b616e] mt-0.5">监管新余市重点企业车辆运输情况</p>
       </div>
 
       {/* 搜索栏 */}
-      <div className="bg-white rounded-lg border border-slate-200 p-3 mb-4">
+      <div className="bg-white rounded-xl border border-[#dee1e6] p-3 mb-4" data-annotation-id="search-bar">
         <div className="flex gap-2">
           <div className="flex-1 relative">
-            <Search className="absolute left-2.5 top-1/2 transform -translate-y-1/2 text-slate-400" size={16} />
+            <Search className="absolute left-2.5 top-1/2 transform -translate-y-1/2 text-[#a8acb3]" size={16} />
             <input
               type="text"
               placeholder="搜索企业名称、联系人、联系电话..."
-              className="w-full pl-9 pr-3 py-1.5 text-sm border border-slate-200 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full pl-9 pr-3 py-2 text-sm border border-[#dee1e6] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0052ff] focus:border-transparent"
             />
           </div>
-          <button className="px-3 py-1.5 text-sm bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors flex items-center gap-1.5">
+          <button className="px-4 py-2 text-sm bg-[#0052ff] text-white rounded-full hover:bg-[#003ecc] transition-colors flex items-center gap-1.5 font-medium">
             <Search size={14} />
             查询
           </button>
-          <button className="px-3 py-1.5 text-sm border border-slate-200 rounded hover:bg-slate-50 transition-colors flex items-center gap-1.5">
+          <button className="px-4 py-2 text-sm border border-[#dee1e6] rounded-full hover:bg-[#eef0f3] transition-colors flex items-center gap-1.5 font-medium">
             <Filter size={14} />
             筛选
           </button>
@@ -376,47 +436,48 @@ const SourceControlPage: React.FC<{ onNavigate: (page: PageType) => void }> = ({
           <div
             key={enterprise.id}
             onClick={() => onNavigate('enterprise-detail')}
-            className="bg-white rounded-lg border border-slate-200 p-4 hover:shadow-md hover:border-blue-300 transition-all cursor-pointer"
+            className="bg-white rounded-xl border border-[#dee1e6] p-4 hover:shadow-md hover:border-[#0052ff] transition-all cursor-pointer"
+            data-annotation-id="enterprise-card"
           >
             <div className="flex items-start justify-between mb-3">
               <div className="flex-1 min-w-0">
-                <h3 className="text-sm font-semibold text-slate-900 mb-1.5 truncate">{enterprise.name}</h3>
-                <div className="space-y-0.5 text-xs text-slate-600">
+                <h3 className="text-sm font-semibold text-[#0a0b0d] mb-1.5 truncate">{enterprise.name}</h3>
+                <div className="space-y-0.5 text-xs text-[#5b616e]">
                   <div className="flex items-center gap-1.5">
-                    <User size={12} className="text-slate-400 flex-shrink-0" />
+                    <User size={12} className="text-[#a8acb3] flex-shrink-0" />
                     <span>{enterprise.contact}</span>
-                    <span className="text-slate-300">|</span>
+                    <span className="text-[#dee1e6]">|</span>
                     <span className="font-mono">{enterprise.phone}</span>
                   </div>
                   <div className="flex items-center gap-1.5">
-                    <MapPin size={12} className="text-slate-400 flex-shrink-0" />
+                    <MapPin size={12} className="text-[#a8acb3] flex-shrink-0" />
                     <span className="truncate">{enterprise.address}</span>
                   </div>
                 </div>
               </div>
               {enterprise.abnormal > 0 && (
-                <span className="px-1.5 py-0.5 bg-red-100 text-red-700 text-xs font-medium rounded whitespace-nowrap ml-2">
+                <span className="px-2 py-0.5 bg-[#fff0f0] text-[#cf202f] text-xs font-medium rounded-full whitespace-nowrap ml-2">
                   {enterprise.abnormal} 异常
                 </span>
               )}
             </div>
 
-            <div className="grid grid-cols-4 gap-3 pt-3 border-t border-slate-100">
+            <div className="grid grid-cols-4 gap-3 pt-3 border-t border-[#eef0f3]">
               <div>
-                <div className="text-xs text-slate-500 mb-0.5">接入摄像头</div>
-                <div className="text-base font-semibold text-slate-900 tabular-nums">{enterprise.cameras}</div>
+                <div className="text-xs text-[#5b616e] mb-0.5">接入摄像头</div>
+                <div className="text-base font-semibold text-[#0a0b0d] tabular-nums">{enterprise.cameras}</div>
               </div>
               <div>
-                <div className="text-xs text-slate-500 mb-0.5">今日进场</div>
-                <div className="text-base font-semibold text-emerald-600 tabular-nums">{enterprise.todayIn}</div>
+                <div className="text-xs text-[#5b616e] mb-0.5">今日进场</div>
+                <div className="text-base font-semibold text-[#0052ff] tabular-nums">{enterprise.todayIn}</div>
               </div>
               <div>
-                <div className="text-xs text-slate-500 mb-0.5">今日出场</div>
-                <div className="text-base font-semibold text-blue-600 tabular-nums">{enterprise.todayOut}</div>
+                <div className="text-xs text-[#5b616e] mb-0.5">今日出场</div>
+                <div className="text-base font-semibold text-[#0052ff] tabular-nums">{enterprise.todayOut}</div>
               </div>
               <div>
-                <div className="text-xs text-slate-500 mb-0.5">异常车辆</div>
-                <div className={`text-base font-semibold tabular-nums ${enterprise.abnormal > 0 ? 'text-red-600' : 'text-slate-400'}`}>
+                <div className="text-xs text-[#5b616e] mb-0.5">异常车辆</div>
+                <div className={`text-base font-semibold tabular-nums ${enterprise.abnormal > 0 ? 'text-[#cf202f]' : 'text-[#a8acb3]'}`}>
                   {enterprise.abnormal}
                 </div>
               </div>
@@ -424,6 +485,44 @@ const SourceControlPage: React.FC<{ onNavigate: (page: PageType) => void }> = ({
           </div>
         ))}
       </div>
+
+      <PrototypeAnnotation
+        pageName="源头管控 - 企业列表"
+        pageDescription="展示新余市所有重点货运企业的基本信息和实时监控数据，便于执法人员快速定位异常企业。"
+        interactions={[
+          {
+            element: '搜索框',
+            action: '输入关键词并点击查询',
+            result: '筛选匹配的企业列表'
+          },
+          {
+            element: '企业卡片',
+            action: '点击任意企业卡片',
+            result: '进入该企业的详情页面，查看车辆进出记录'
+          },
+          {
+            element: '筛选按钮',
+            action: '点击筛选',
+            result: '展开高级筛选条件（区域、异常状态等）'
+          }
+        ]}
+        states={[
+          {
+            name: '异常状态',
+            description: '有异常车辆的企业右上角显示红色"N 异常"标签'
+          },
+          {
+            name: '数据指标',
+            description: '今日进场/出场使用蓝色，异常车辆使用红色'
+          }
+        ]}
+        notes={[
+          '企业卡片采用网格布局，每行2个',
+          '异常企业优先排序显示',
+          '搜索支持企业名称、联系人、电话模糊匹配',
+          '数据指标实时更新，每分钟刷新一次'
+        ]}
+      />
     </div>
   );
 };
@@ -450,11 +549,11 @@ const EnterpriseDetailPage: React.FC<{ onNavigate: (page: PageType) => void }> =
       </button>
 
       {/* 企业基本信息 */}
-      <div className="bg-white rounded-lg border border-slate-200 p-4 mb-4">
+      <div className="bg-white rounded-xl border border-[#dee1e6] p-4 mb-4" data-annotation-id="enterprise-info">
         <div className="flex items-start justify-between mb-3">
           <div>
-            <h2 className="text-lg font-semibold text-slate-900 mb-1.5">新余市建材运输有限公司</h2>
-            <div className="flex items-center gap-3 text-xs text-slate-600">
+            <h2 className="text-lg font-semibold text-[#0a0b0d] mb-1.5">新余市建材运输有限公司</h2>
+            <div className="flex items-center gap-3 text-xs text-[#5b616e]">
               <span className="flex items-center gap-1">
                 <User size={12} />
                 联系人: 张经理
@@ -466,55 +565,55 @@ const EnterpriseDetailPage: React.FC<{ onNavigate: (page: PageType) => void }> =
               </span>
             </div>
           </div>
-          <span className="px-2 py-1 bg-emerald-50 text-emerald-700 text-xs font-medium rounded">
+          <span className="px-3 py-1 bg-[#e6f7f0] text-[#05b169] text-xs font-medium rounded-full">
             正常运营
           </span>
         </div>
 
-        <div className="grid grid-cols-6 gap-3 pt-3 border-t border-slate-100">
+        <div className="grid grid-cols-6 gap-3 pt-3 border-t border-[#eef0f3]">
           <div className="text-center">
-            <div className="text-2xl font-semibold text-slate-900 tabular-nums">8</div>
-            <div className="text-xs text-slate-500 mt-0.5">接入摄像头</div>
+            <div className="text-2xl font-semibold text-[#0a0b0d] tabular-nums">8</div>
+            <div className="text-xs text-[#5b616e] mt-0.5">接入摄像头</div>
           </div>
           <div className="text-center">
-            <div className="text-2xl font-semibold text-emerald-600 tabular-nums">45</div>
-            <div className="text-xs text-slate-500 mt-0.5">今日进场</div>
+            <div className="text-2xl font-semibold text-[#0052ff] tabular-nums">45</div>
+            <div className="text-xs text-[#5b616e] mt-0.5">今日进场</div>
           </div>
           <div className="text-center">
-            <div className="text-2xl font-semibold text-blue-600 tabular-nums">42</div>
-            <div className="text-xs text-slate-500 mt-0.5">今日出场</div>
+            <div className="text-2xl font-semibold text-[#0052ff] tabular-nums">42</div>
+            <div className="text-xs text-[#5b616e] mt-0.5">今日出场</div>
           </div>
           <div className="text-center">
-            <div className="text-2xl font-semibold text-purple-600 tabular-nums">3</div>
-            <div className="text-xs text-slate-500 mt-0.5">当前在场</div>
+            <div className="text-2xl font-semibold text-[#5b616e] tabular-nums">3</div>
+            <div className="text-xs text-[#5b616e] mt-0.5">当前在场</div>
           </div>
           <div className="text-center">
-            <div className="text-2xl font-semibold text-red-600 tabular-nums">3</div>
-            <div className="text-xs text-slate-500 mt-0.5">异常车辆</div>
+            <div className="text-2xl font-semibold text-[#cf202f] tabular-nums">3</div>
+            <div className="text-xs text-[#5b616e] mt-0.5">异常车辆</div>
           </div>
           <div className="text-center">
-            <div className="text-2xl font-semibold text-orange-600 tabular-nums">1,248</div>
-            <div className="text-xs text-slate-500 mt-0.5">本月通行</div>
+            <div className="text-2xl font-semibold text-[#0a0b0d] tabular-nums">1,248</div>
+            <div className="text-xs text-[#5b616e] mt-0.5">本月通行</div>
           </div>
         </div>
       </div>
 
       {/* 车辆出入记录 */}
-      <div className="bg-white rounded-lg border border-slate-200">
-        <div className="px-4 py-3 border-b border-slate-200">
+      <div className="bg-white rounded-xl border border-[#dee1e6]" data-annotation-id="vehicle-records-table">
+        <div className="px-4 py-3 border-b border-[#dee1e6]">
           <div className="flex items-center justify-between">
-            <h3 className="text-sm font-semibold text-slate-900">车辆出入记录</h3>
+            <h3 className="text-sm font-semibold text-[#0a0b0d]">车辆出入记录</h3>
             <div className="flex gap-2">
               <input
                 type="text"
                 placeholder="搜索车牌号..."
-                className="px-2.5 py-1 text-xs border border-slate-200 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="px-3 py-1.5 text-xs border border-[#dee1e6] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#0052ff]"
               />
-              <button className="px-2.5 py-1 text-xs border border-slate-200 rounded hover:bg-slate-50 transition-colors flex items-center gap-1">
+              <button className="px-3 py-1.5 text-xs border border-[#dee1e6] rounded-lg hover:bg-[#eef0f3] transition-colors flex items-center gap-1">
                 <Filter size={12} />
                 筛选
               </button>
-              <button className="px-2.5 py-1 text-xs bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors flex items-center gap-1">
+              <button className="px-3 py-1.5 text-xs bg-[#0052ff] text-white rounded-lg hover:bg-[#003ecc] transition-colors flex items-center gap-1 font-medium">
                 <Download size={12} />
                 导出
               </button>
@@ -524,40 +623,40 @@ const EnterpriseDetailPage: React.FC<{ onNavigate: (page: PageType) => void }> =
 
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
-            <thead className="bg-slate-50 border-b border-slate-200">
+            <thead className="bg-[#f7f7f7] border-b border-[#dee1e6]">
               <tr>
-                <th className="px-4 py-2.5 text-left text-xs font-medium text-slate-600">车牌号码</th>
-                <th className="px-4 py-2.5 text-left text-xs font-medium text-slate-600">车辆品牌</th>
-                <th className="px-4 py-2.5 text-left text-xs font-medium text-slate-600">车身颜色</th>
-                <th className="px-4 py-2.5 text-left text-xs font-medium text-slate-600">进场时间</th>
-                <th className="px-4 py-2.5 text-left text-xs font-medium text-slate-600">出场时间</th>
-                <th className="px-4 py-2.5 text-left text-xs font-medium text-slate-600">运输状态</th>
-                <th className="px-4 py-2.5 text-left text-xs font-medium text-slate-600">操作</th>
+                <th className="px-4 py-2.5 text-left text-xs font-medium text-[#5b616e]">车牌号码</th>
+                <th className="px-4 py-2.5 text-left text-xs font-medium text-[#5b616e]">车辆品牌</th>
+                <th className="px-4 py-2.5 text-left text-xs font-medium text-[#5b616e]">车身颜色</th>
+                <th className="px-4 py-2.5 text-left text-xs font-medium text-[#5b616e]">进场时间</th>
+                <th className="px-4 py-2.5 text-left text-xs font-medium text-[#5b616e]">出场时间</th>
+                <th className="px-4 py-2.5 text-left text-xs font-medium text-[#5b616e]">运输状态</th>
+                <th className="px-4 py-2.5 text-left text-xs font-medium text-[#5b616e]">操作</th>
               </tr>
             </thead>
-            <tbody className="bg-white divide-y divide-slate-100">
+            <tbody className="bg-white divide-y divide-[#eef0f3]">
               {vehicleRecords.map((record) => (
-                <tr key={record.id} className="hover:bg-slate-50 transition-colors">
+                <tr key={record.id} className="hover:bg-[#f7f7f7] transition-colors">
                   <td className="px-4 py-3 whitespace-nowrap">
-                    <span className="font-mono text-xs font-semibold text-slate-900">{record.plate}</span>
+                    <span className="font-mono text-xs font-semibold text-[#0a0b0d]">{record.plate}</span>
                   </td>
-                  <td className="px-4 py-3 whitespace-nowrap text-xs text-slate-600">{record.brand}</td>
-                  <td className="px-4 py-3 whitespace-nowrap text-xs text-slate-600">{record.color}</td>
-                  <td className="px-4 py-3 whitespace-nowrap text-xs text-slate-600 font-mono tabular-nums">{record.inTime}</td>
-                  <td className="px-4 py-3 whitespace-nowrap text-xs text-slate-600 font-mono tabular-nums">
-                    {record.outTime || <span className="text-slate-400">-</span>}
+                  <td className="px-4 py-3 whitespace-nowrap text-xs text-[#5b616e]">{record.brand}</td>
+                  <td className="px-4 py-3 whitespace-nowrap text-xs text-[#5b616e]">{record.color}</td>
+                  <td className="px-4 py-3 whitespace-nowrap text-xs text-[#5b616e] font-mono tabular-nums">{record.inTime}</td>
+                  <td className="px-4 py-3 whitespace-nowrap text-xs text-[#5b616e] font-mono tabular-nums">
+                    {record.outTime || <span className="text-[#a8acb3]">-</span>}
                   </td>
                   <td className="px-4 py-3 whitespace-nowrap">
-                    <span className={`px-1.5 py-0.5 text-xs font-medium rounded ${
-                      record.status === '正常' ? 'bg-emerald-100 text-emerald-700' :
-                      record.status === '超限' ? 'bg-red-100 text-red-700' :
-                      'bg-blue-100 text-blue-700'
+                    <span className={`px-2 py-0.5 text-xs font-medium rounded-full ${
+                      record.status === '正常' ? 'bg-[#e6f7f0] text-[#05b169]' :
+                      record.status === '超限' ? 'bg-[#fff0f0] text-[#cf202f]' :
+                      'bg-[#e6f7f0] text-[#05b169]'
                     }`}>
                       {record.status}
                     </span>
                   </td>
                   <td className="px-4 py-3 whitespace-nowrap text-xs">
-                    <button className="text-blue-600 hover:text-blue-800 transition-colors">查看详情</button>
+                    <button className="text-[#0052ff] hover:text-[#003ecc] transition-colors font-medium">查看详情</button>
                   </td>
                 </tr>
               ))}
@@ -566,16 +665,16 @@ const EnterpriseDetailPage: React.FC<{ onNavigate: (page: PageType) => void }> =
         </div>
 
         {/* 分页 */}
-        <div className="px-4 py-3 border-t border-slate-200 flex items-center justify-between text-xs">
-          <div className="text-slate-600">
+        <div className="px-4 py-3 border-t border-[#dee1e6] flex items-center justify-between text-xs">
+          <div className="text-[#5b616e]">
             共 156 条记录，当前第 1/16 页
           </div>
           <div className="flex gap-1">
-            <button className="px-2.5 py-1 border border-slate-200 rounded hover:bg-slate-50 transition-colors">上一页</button>
-            <button className="px-2.5 py-1 bg-blue-600 text-white rounded">1</button>
-            <button className="px-2.5 py-1 border border-slate-200 rounded hover:bg-slate-50 transition-colors">2</button>
-            <button className="px-2.5 py-1 border border-slate-200 rounded hover:bg-slate-50 transition-colors">3</button>
-            <button className="px-2.5 py-1 border border-slate-200 rounded hover:bg-slate-50 transition-colors">下一页</button>
+            <button className="px-3 py-1.5 border border-[#dee1e6] rounded-lg hover:bg-[#eef0f3] transition-colors">上一页</button>
+            <button className="px-3 py-1.5 bg-[#0052ff] text-white rounded-lg font-medium">1</button>
+            <button className="px-3 py-1.5 border border-[#dee1e6] rounded-lg hover:bg-[#eef0f3] transition-colors">2</button>
+            <button className="px-3 py-1.5 border border-[#dee1e6] rounded-lg hover:bg-[#eef0f3] transition-colors">3</button>
+            <button className="px-3 py-1.5 border border-[#dee1e6] rounded-lg hover:bg-[#eef0f3] transition-colors">下一页</button>
           </div>
         </div>
       </div>

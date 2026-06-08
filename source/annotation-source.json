@@ -1,0 +1,197 @@
+{
+  "documentVersion": 1,
+  "format": "axhub-annotation-source",
+  "data": {
+    "version": 2,
+    "prototypeName": "xinyu-traffic-supervision",
+    "pageId": "dashboard",
+    "updatedAt": 1717826400000,
+    "nodes": [
+      {
+        "id": "dashboard-stats",
+        "index": 1,
+        "title": "核心指标卡片",
+        "pageId": "dashboard",
+        "locator": {
+          "selectors": ["[data-annotation-id=\"dashboard-stats\"]"],
+          "fingerprint": "div|data-annotation-id=dashboard-stats",
+          "path": []
+        },
+        "aiPrompt": "展示6个核心业务指标的统计卡片组，使用 Coinbase 配色系统。",
+        "annotationText": "",
+        "hasMarkdown": true,
+        "color": "#0052ff",
+        "images": [],
+        "createdAt": 1717826400000,
+        "updatedAt": 1717826400000
+      },
+      {
+        "id": "alert-list",
+        "index": 2,
+        "title": "实时预警列表",
+        "pageId": "dashboard",
+        "locator": {
+          "selectors": ["[data-annotation-id=\"alert-list\"]"],
+          "fingerprint": "div|data-annotation-id=alert-list",
+          "path": []
+        },
+        "aiPrompt": "显示最近5条实时预警记录，包括超限预警、黑名单预警、遮挡号牌等类型。",
+        "annotationText": "",
+        "hasMarkdown": true,
+        "color": "#cf202f",
+        "images": [],
+        "createdAt": 1717826400000,
+        "updatedAt": 1717826400000
+      },
+      {
+        "id": "enterprise-ranking",
+        "index": 3,
+        "title": "企业违法排行",
+        "pageId": "dashboard",
+        "locator": {
+          "selectors": ["[data-annotation-id=\"enterprise-ranking\"]"],
+          "fingerprint": "div|data-annotation-id=enterprise-ranking",
+          "path": []
+        },
+        "aiPrompt": "展示本月违法次数最多的前5家企业，包含趋势指示器。",
+        "annotationText": "",
+        "hasMarkdown": true,
+        "color": "#f4b000",
+        "images": [],
+        "createdAt": 1717826400000,
+        "updatedAt": 1717826400000
+      },
+      {
+        "id": "enterprise-card",
+        "index": 4,
+        "title": "企业卡片",
+        "pageId": "source-control",
+        "locator": {
+          "selectors": ["[data-annotation-id=\"enterprise-card\"]"],
+          "fingerprint": "div|data-annotation-id=enterprise-card",
+          "path": []
+        },
+        "aiPrompt": "展示单个企业的基本信息和实时数据指标。",
+        "annotationText": "",
+        "hasMarkdown": true,
+        "color": "#0052ff",
+        "images": [],
+        "createdAt": 1717826400000,
+        "updatedAt": 1717826400000
+      },
+      {
+        "id": "search-bar",
+        "index": 5,
+        "title": "搜索筛选栏",
+        "pageId": ["source-control", "data-query", "blacklist"],
+        "locator": {
+          "selectors": ["[data-annotation-id=\"search-bar\"]"],
+          "fingerprint": "div|data-annotation-id=search-bar",
+          "path": []
+        },
+        "aiPrompt": "提供搜索和筛选功能，支持多字段模糊查询。",
+        "annotationText": "",
+        "hasMarkdown": true,
+        "color": "#5b616e",
+        "images": [],
+        "createdAt": 1717826400000,
+        "updatedAt": 1717826400000
+      }
+    ]
+  },
+  "markdownMap": {
+    "dashboard-stats": "## 核心指标卡片\n\n### 功能说明\n展示新余交通治超平台的6个核心业务指标：\n- 重点企业数量（蓝色）\n- 接入摄像头数量（蓝色）\n- 今日货车通行量（灰色）\n- 超限车辆数量（黄色）\n- 黑名单预警数量（红色）\n- 遮挡号牌研判数量（黄色）\n\n### 交互行为\n- 点击卡片 → 跳转到对应功能模块\n- 卡片悬停 → 显示阴影效果\n\n### 设计规范\n- 配色：Coinbase 主题色系\n- 圆角：rounded-xl (24px)\n- 数字字体：等宽字体 tabular-nums\n- 图标：lucide-react，尺寸 18px",
+    "alert-list": "## 实时预警列表\n\n### 功能说明\n实时显示最近的预警记录，包括：\n- 超限预警（黄色标签）\n- 黑名单预警（红色标签）\n- 遮挡号牌（黄色标签）\n\n### 数据字段\n- 时间：HH:mm:ss 格式\n- 类型：预警类型标签\n- 车牌：赣K + 5位字符\n- 地点：检测点位置\n- 状态：待处理/处理中/已完成\n\n### 交互行为\n- 点击记录 → 跳转到对应详情页\n- 行悬停 → 高亮背景\n\n### 刷新机制\n数据每30秒自动刷新一次",
+    "enterprise-ranking": "## 企业违法排行\n\n### 功能说明\n展示本月违法次数最多的前5家企业，帮助执法人员识别重点监管对象。\n\n### 数据展示\n- 排名：前3名用颜色区分（红/黄/黄），其他用灰色\n- 企业名称：新余本地货运企业\n- 违法次数：红色数字 + tabular-nums\n- 趋势：上升/下降/持平图标\n\n### 交互行为\n- 点击企业 → 跳转到企业详情页\n- 行悬停 → 高亮背景\n\n### 统计规则\n按自然月统计，每月1号重置",
+    "enterprise-card": "## 企业卡片\n\n### 功能说明\n卡片式展示单个企业的基本信息和实时监控数据。\n\n### 数据字段\n**基本信息：**\n- 企业名称\n- 联系人 + 电话\n- 详细地址\n- 异常标签（红色）\n\n**实时指标：**\n- 接入摄像头数量\n- 今日进场（蓝色）\n- 今日出场（蓝色）\n- 异常车辆（红色）\n\n### 交互行为\n- 点击卡片 → 进入企业详情页\n- 卡片悬停 → 边框变蓝 + 阴影\n\n### 布局规范\n- 网格：2列布局\n- 圆角：rounded-xl (24px)\n- 间距：gap-4 (16px)",
+    "search-bar": "## 搜索筛选栏\n\n### 功能说明\n提供全局搜索和高级筛选功能，支持多字段模糊查询。\n\n### 交互元素\n1. **搜索框**\n   - 占位符提示搜索范围\n   - 支持实时搜索或点击查询按钮\n   - 聚焦时显示蓝色边框\n\n2. **查询按钮**\n   - Coinbase Blue pill 按钮\n   - 图标 + 文字\n\n3. **筛选按钮**\n   - 次要按钮样式\n   - 点击展开高级筛选面板\n\n### 搜索范围\n- 源头管控：企业名称、联系人、电话\n- 数据查询：车牌号、检测点、时间范围\n- 黑名单：车牌号、所属公司\n\n### 设计规范\n- 按钮：rounded-full (pill)\n- 主按钮：bg-[#0052ff]\n- 次要按钮：border-[#dee1e6]"
+  },
+  "assetMap": {},
+  "directory": {
+    "nodes": [
+      {
+        "type": "folder",
+        "id": "project-overview",
+        "title": "项目资料",
+        "defaultExpanded": true,
+        "children": [
+          {
+            "type": "markdown",
+            "id": "doc-requirements",
+            "title": "产品需求文档",
+            "markdown": "# 新余交通治超综合监管平台 - 产品需求\n\n**日期**：2026-06-08  \n**状态**：已确认\n\n## 目标用户\n- 新余交通运输局工作人员\n- 治超执法人员\n- 源头企业管理人员\n- 监控值班人员\n\n## 核心任务\n1. 监控源头企业车辆进出场情况\n2. 识别和研判遮挡号牌车辆\n3. 查询和统计超限车辆数据\n4. 实时查看监控视频\n5. 管理黑名单车辆并预警\n6. 生成治超报告\n7. 维护基础数据\n\n## 功能范围\n\n### 本次实现的12个页面\n1. **首页驾驶舱** - 综合数据展示\n2. **源头管控** - 企业列表 + 企业详情\n3. **遮挡研判** - 预警列表 + 研判详情\n4. **治超报告** - 报告生成 + 报告预览\n5. **数据查询** - 多条件查询\n6. **视频巡查** - 实时监控\n7. **黑名单管理** - 列表 + 轨迹详情\n8. **基础信息管理** - 数据维护\n\n## 设计基底\n**主题**：Coinbase 设计系统  \n**主色调**：Coinbase Blue (#0052ff)  \n**适用场景**：政务监管平台、数据密集型界面"
+          },
+          {
+            "type": "markdown",
+            "id": "doc-design-decisions",
+            "title": "设计决策说明",
+            "markdown": "# 设计决策\n\n## 采用的设计基底\n**主题**：Coinbase (`src/themes/coinbase/DESIGN.md`)\n\n**选择理由**：\n- Coinbase Blue (#0052ff) 符合政务蓝色调要求\n- 金融级专业感适合监管平台\n- 清晰的卡片式布局适合数据密集型界面\n- 成熟的数据仪表盘设计语言\n\n## 色彩系统\n\n### 主色调\n- **Coinbase Blue** (#0052ff) - 主要操作按钮、链接、强调元素\n- **白色背景** (#ffffff) - 页面背景\n\n### 语义色\n- **成功/正常** (#05b169) - 正常通行、已完成\n- **警告/超限** (#f4b000) - 超限车辆、待处理\n- **危险/预警** (#cf202f) - 黑名单、严重超限\n\n### 文本色\n- **主文本** (#0a0b0d)\n- **次要文本** (#5b616e)\n- **禁用/占位** (#a8acb3)\n\n## 组件规范\n\n### 按钮\n- **主要按钮**：Coinbase Blue 填充，白色文字，pill 圆角\n- **次要按钮**：透明背景，边框，pill 圆角\n\n### 卡片\n- **圆角**：24px (rounded-xl)\n- **边框**：1px solid #dee1e6\n- **悬停**：border-[#0052ff] + shadow-sm"
+          },
+          {
+            "type": "link",
+            "id": "link-coinbase-theme",
+            "title": "Coinbase 主题规范",
+            "href": "/themes/coinbase",
+            "target": "blank"
+          }
+        ]
+      },
+      {
+        "type": "folder",
+        "id": "page-navigation",
+        "title": "页面导航",
+        "defaultExpanded": true,
+        "children": [
+          {
+            "type": "route",
+            "id": "route-dashboard",
+            "title": "首页驾驶舱",
+            "route": "dashboard"
+          },
+          {
+            "type": "route",
+            "id": "route-source-control",
+            "title": "源头管控",
+            "route": "source-control"
+          },
+          {
+            "type": "route",
+            "id": "route-enterprise-detail",
+            "title": "企业详情",
+            "route": "enterprise-detail"
+          },
+          {
+            "type": "route",
+            "id": "route-plate-analysis",
+            "title": "遮挡研判",
+            "route": "plate-analysis"
+          },
+          {
+            "type": "route",
+            "id": "route-data-query",
+            "title": "数据查询",
+            "route": "data-query"
+          },
+          {
+            "type": "route",
+            "id": "route-video-patrol",
+            "title": "视频巡查",
+            "route": "video-patrol"
+          },
+          {
+            "type": "route",
+            "id": "route-blacklist",
+            "title": "黑名单管理",
+            "route": "blacklist"
+          },
+          {
+            "type": "route",
+            "id": "route-basic-info",
+            "title": "基础信息管理",
+            "route": "basic-info"
+          }
+        ]
+      }
+    ]
+  }
+}
