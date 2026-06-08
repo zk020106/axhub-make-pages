@@ -18,8 +18,8 @@
           "path": []
         },
         "aiPrompt": "展示6个核心业务指标的统计卡片组，使用 Coinbase 配色系统。",
-        "annotationText": "",
-        "hasMarkdown": true,
+        "annotationText": "核心指标卡片展示新余交通治超平台的6个核心业务指标：重点企业数量、接入摄像头数量、今日货车通行量、超限车辆数量、黑名单预警数量、遮挡号牌研判数量。点击卡片可跳转到对应功能模块。",
+        "hasMarkdown": false,
         "color": "#0052ff",
         "images": [],
         "createdAt": 1717826400000,
@@ -36,8 +36,8 @@
           "path": []
         },
         "aiPrompt": "显示最近5条实时预警记录，包括超限预警、黑名单预警、遮挡号牌等类型。",
-        "annotationText": "",
-        "hasMarkdown": true,
+        "annotationText": "实时预警列表显示最近的预警记录，包括超限预警、黑名单预警、遮挡号牌。每条记录显示时间、类型、车牌、地点、状态。点击记录可跳转到对应详情页。数据每30秒自动刷新一次。",
+        "hasMarkdown": false,
         "color": "#cf202f",
         "images": [],
         "createdAt": 1717826400000,
@@ -54,8 +54,8 @@
           "path": []
         },
         "aiPrompt": "展示本月违法次数最多的前5家企业，包含趋势指示器。",
-        "annotationText": "",
-        "hasMarkdown": true,
+        "annotationText": "企业违法排行展示本月违法次数最多的前5家企业。排名前3名用颜色区分，显示企业名称、违法次数、趋势图标。点击企业可跳转到企业详情页。按自然月统计，每月1号重置。",
+        "hasMarkdown": false,
         "color": "#f4b000",
         "images": [],
         "createdAt": 1717826400000,
@@ -72,8 +72,8 @@
           "path": []
         },
         "aiPrompt": "展示单个企业的基本信息和实时数据指标。",
-        "annotationText": "",
-        "hasMarkdown": true,
+        "annotationText": "企业卡片展示单个企业的基本信息和实时数据。包含企业名称、联系人、电话、地址、异常标签。实时指标：接入摄像头数量、今日进场、今日出场、异常车辆。点击卡片进入企业详情页。",
+        "hasMarkdown": false,
         "color": "#0052ff",
         "images": [],
         "createdAt": 1717826400000,
@@ -90,8 +90,224 @@
           "path": []
         },
         "aiPrompt": "提供搜索和筛选功能，支持多字段模糊查询。",
-        "annotationText": "",
-        "hasMarkdown": true,
+        "annotationText": "搜索筛选栏提供全局搜索和高级筛选功能。包含搜索框、查询按钮、筛选按钮。支持多字段模糊查询：源头管控支持企业名称、联系人、电话；数据查询支持车牌号、检测点、时间范围；黑名单支持车牌号、所属公司。",
+        "hasMarkdown": false,
+        "color": "#5b616e",
+        "images": [],
+        "createdAt": 1717826400000,
+        "updatedAt": 1717826400000
+      },
+      {
+        "id": "enterprise-info",
+        "index": 6,
+        "title": "企业基本信息",
+        "pageId": "enterprise-detail",
+        "locator": {
+          "selectors": ["[data-annotation-id=\"enterprise-info\"]"],
+          "fingerprint": "div|data-annotation-id=enterprise-info",
+          "path": []
+        },
+        "aiPrompt": "展示企业详细信息和核心数据指标。",
+        "annotationText": "企业基本信息展示企业的详细档案和实时运营数据。基本档案包含企业全称、联系人、电话、地址、运营状态。实时指标包含接入摄像头数量、今日进场/出场车辆数、当前在场车辆数、异常车辆数、本月通行总量。",
+        "hasMarkdown": false,
+        "color": "#0052ff",
+        "images": [],
+        "createdAt": 1717826400000,
+        "updatedAt": 1717826400000
+      },
+      {
+        "id": "vehicle-records-table",
+        "index": 7,
+        "title": "车辆出入记录表",
+        "pageId": "enterprise-detail",
+        "locator": {
+          "selectors": ["[data-annotation-id=\"vehicle-records-table\"]"],
+          "fingerprint": "div|data-annotation-id=vehicle-records-table",
+          "path": []
+        },
+        "aiPrompt": "展示企业车辆进出场记录，支持搜索、筛选、导出。",
+        "annotationText": "车辆出入记录表完整记录企业车辆的进出场数据。包含车牌号码、车辆品牌、车身颜色、进场时间、出场时间、运输状态、操作。支持车牌号搜索、筛选、导出Excel、分页。点击查看详情可跳转到车辆详情页。",
+        "hasMarkdown": false,
+        "color": "#5b616e",
+        "images": [],
+        "createdAt": 1717826400000,
+        "updatedAt": 1717826400000
+      },
+      {
+        "id": "plate-analysis-stats",
+        "index": 8,
+        "title": "遮挡研判统计",
+        "pageId": "plate-analysis",
+        "locator": {
+          "selectors": ["[data-annotation-id=\"plate-analysis-stats\"]"],
+          "fingerprint": "div|data-annotation-id=plate-analysis-stats",
+          "path": []
+        },
+        "aiPrompt": "展示今日遮挡号牌识别系统的运行数据统计。",
+        "annotationText": "遮挡研判统计展示今日遮挡号牌识别系统的运行数据。包含今日触发、待处理、处理中、已确认四个指标。按自然日统计，每分钟更新一次。点击卡片可筛选对应状态的记录。",
+        "hasMarkdown": false,
+        "color": "#f4b000",
+        "images": [],
+        "createdAt": 1717826400000,
+        "updatedAt": 1717826400000
+      },
+      {
+        "id": "plate-analysis-list",
+        "index": 9,
+        "title": "遮挡研判列表",
+        "pageId": "plate-analysis",
+        "locator": {
+          "selectors": ["[data-annotation-id=\"plate-analysis-list\"]"],
+          "fingerprint": "div|data-annotation-id=plate-analysis-list",
+          "path": []
+        },
+        "aiPrompt": "展示所有遮挡号牌预警记录列表。",
+        "annotationText": "遮挡研判列表展示所有遮挡号牌预警记录。每条记录包含检测时间、地点、车辆信息、匹配度、处理状态。支持按点位、状态、匹配度筛选。点击记录进入研判详情页。",
+        "hasMarkdown": false,
+        "color": "#cf202f",
+        "images": [],
+        "createdAt": 1717826400000,
+        "updatedAt": 1717826400000
+      },
+      {
+        "id": "plate-comparison",
+        "index": 10,
+        "title": "号牌对比",
+        "pageId": "plate-detail",
+        "locator": {
+          "selectors": ["[data-annotation-id=\"plate-comparison\"]"],
+          "fingerprint": "div|data-annotation-id=plate-comparison",
+          "path": []
+        },
+        "aiPrompt": "左右对比展示现场照片和库内照片。",
+        "annotationText": "号牌对比用于左右对比现场照片和库内照片。显示抓拍时间、检测地点、车辆信息、匹配度百分比。提供确认遮挡、误报、需复核三个操作按钮。",
+        "hasMarkdown": false,
+        "color": "#0052ff",
+        "images": [],
+        "createdAt": 1717826400000,
+        "updatedAt": 1717826400000
+      },
+      {
+        "id": "report-config",
+        "index": 11,
+        "title": "报告配置",
+        "pageId": "report",
+        "locator": {
+          "selectors": ["[data-annotation-id=\"report-config\"]"],
+          "fingerprint": "div|data-annotation-id=report-config",
+          "path": []
+        },
+        "aiPrompt": "配置治超报告的生成参数。",
+        "annotationText": "报告配置用于配置治超报告的生成参数。包含报告类型、时间范围、数据维度、统计指标的选择。支持保存为模板和重置功能。点击生成报告按钮进入预览页。",
+        "hasMarkdown": false,
+        "color": "#5b616e",
+        "images": [],
+        "createdAt": 1717826400000,
+        "updatedAt": 1717826400000
+      },
+      {
+        "id": "report-preview",
+        "index": 12,
+        "title": "报告预览",
+        "pageId": "report-preview",
+        "locator": {
+          "selectors": ["[data-annotation-id=\"report-preview\"]"],
+          "fingerprint": "div|data-annotation-id=report-preview",
+          "path": []
+        },
+        "aiPrompt": "展示生成的治超报告。",
+        "annotationText": "报告预览展示生成的治超报告。包含报告头部、核心指标、图表区域、数据表格。支持导出PDF、导出Excel、打印、分享功能。图表使用Coinbase配色。",
+        "hasMarkdown": false,
+        "color": "#0052ff",
+        "images": [],
+        "createdAt": 1717826400000,
+        "updatedAt": 1717826400000
+      },
+      {
+        "id": "data-query-form",
+        "index": 13,
+        "title": "数据查询表单",
+        "pageId": "data-query",
+        "locator": {
+          "selectors": ["[data-annotation-id=\"data-query-form\"]"],
+          "fingerprint": "div|data-annotation-id=data-query-form",
+          "path": []
+        },
+        "aiPrompt": "提供多条件组合查询。",
+        "annotationText": "数据查询表单提供多条件组合查询功能。包含车牌号、时间范围、检测点、车辆品牌、车身颜色、状态等查询条件。支持保存查询方案和导出查询结果。",
+        "hasMarkdown": false,
+        "color": "#5b616e",
+        "images": [],
+        "createdAt": 1717826400000,
+        "updatedAt": 1717826400000
+      },
+      {
+        "id": "video-grid",
+        "index": 14,
+        "title": "视频监控网格",
+        "pageId": "video-patrol",
+        "locator": {
+          "selectors": ["[data-annotation-id=\"video-grid\"]"],
+          "fingerprint": "div|data-annotation-id=video-grid",
+          "path": []
+        },
+        "aiPrompt": "多宫格视频监控展示。",
+        "annotationText": "视频监控网格支持1屏、4屏、9屏、16屏切换。每个视频窗口包含摄像头名称、检测点位置、播放控制、音量控制、全屏按钮。左侧树形结构按区域和企业分组显示摄像头列表。",
+        "hasMarkdown": false,
+        "color": "#0052ff",
+        "images": [],
+        "createdAt": 1717826400000,
+        "updatedAt": 1717826400000
+      },
+      {
+        "id": "blacklist-table",
+        "index": 15,
+        "title": "黑名单列表",
+        "pageId": "blacklist",
+        "locator": {
+          "selectors": ["[data-annotation-id=\"blacklist-table\"]"],
+          "fingerprint": "div|data-annotation-id=blacklist-table",
+          "path": []
+        },
+        "aiPrompt": "管理和展示黑名单车辆信息。",
+        "annotationText": "黑名单列表管理和展示黑名单车辆信息。包含车牌号码、所属公司、车辆信息、加入时间、加入原因、预警次数、最后预警时间、状态。支持添加、批量导入导出、搜索筛选。点击查看轨迹进入轨迹详情页。",
+        "hasMarkdown": false,
+        "color": "#cf202f",
+        "images": [],
+        "createdAt": 1717826400000,
+        "updatedAt": 1717826400000
+      },
+      {
+        "id": "vehicle-trajectory",
+        "index": 16,
+        "title": "车辆轨迹",
+        "pageId": "blacklist-detail",
+        "locator": {
+          "selectors": ["[data-annotation-id=\"vehicle-trajectory\"]"],
+          "fingerprint": "div|data-annotation-id=vehicle-trajectory",
+          "path": []
+        },
+        "aiPrompt": "展示黑名单车辆经过的检测点轨迹。",
+        "annotationText": "车辆轨迹展示黑名单车辆经过的所有检测点轨迹。时间轴视图按时间倒序排列，每个节点显示通过时间、检测点、抓拍照片、车辆状态。支持时间范围筛选和导出轨迹。",
+        "hasMarkdown": false,
+        "color": "#f4b000",
+        "images": [],
+        "createdAt": 1717826400000,
+        "updatedAt": 1717826400000
+      },
+      {
+        "id": "basic-info-tabs",
+        "index": 17,
+        "title": "基础信息管理",
+        "pageId": "basic-info",
+        "locator": {
+          "selectors": ["[data-annotation-id=\"basic-info-tabs\"]"],
+          "fingerprint": "div|data-annotation-id=basic-info-tabs",
+          "path": []
+        },
+        "aiPrompt": "Tab切换管理多种基础数据。",
+        "annotationText": "基础信息管理通过Tab切换管理检测点、企业、车辆、摄像头、用户等基础数据。每个Tab包含搜索、筛选、添加、批量导入导出功能。支持数据表格排序和行内编辑。",
+        "hasMarkdown": false,
         "color": "#5b616e",
         "images": [],
         "createdAt": 1717826400000,
@@ -99,13 +315,7 @@
       }
     ]
   },
-  "markdownMap": {
-    "dashboard-stats": "## 核心指标卡片\n\n### 功能说明\n展示新余交通治超平台的6个核心业务指标：\n- 重点企业数量（蓝色）\n- 接入摄像头数量（蓝色）\n- 今日货车通行量（灰色）\n- 超限车辆数量（黄色）\n- 黑名单预警数量（红色）\n- 遮挡号牌研判数量（黄色）\n\n### 交互行为\n- 点击卡片 → 跳转到对应功能模块\n- 卡片悬停 → 显示阴影效果\n\n### 设计规范\n- 配色：Coinbase 主题色系\n- 圆角：rounded-xl (24px)\n- 数字字体：等宽字体 tabular-nums\n- 图标：lucide-react，尺寸 18px",
-    "alert-list": "## 实时预警列表\n\n### 功能说明\n实时显示最近的预警记录，包括：\n- 超限预警（黄色标签）\n- 黑名单预警（红色标签）\n- 遮挡号牌（黄色标签）\n\n### 数据字段\n- 时间：HH:mm:ss 格式\n- 类型：预警类型标签\n- 车牌：赣K + 5位字符\n- 地点：检测点位置\n- 状态：待处理/处理中/已完成\n\n### 交互行为\n- 点击记录 → 跳转到对应详情页\n- 行悬停 → 高亮背景\n\n### 刷新机制\n数据每30秒自动刷新一次",
-    "enterprise-ranking": "## 企业违法排行\n\n### 功能说明\n展示本月违法次数最多的前5家企业，帮助执法人员识别重点监管对象。\n\n### 数据展示\n- 排名：前3名用颜色区分（红/黄/黄），其他用灰色\n- 企业名称：新余本地货运企业\n- 违法次数：红色数字 + tabular-nums\n- 趋势：上升/下降/持平图标\n\n### 交互行为\n- 点击企业 → 跳转到企业详情页\n- 行悬停 → 高亮背景\n\n### 统计规则\n按自然月统计，每月1号重置",
-    "enterprise-card": "## 企业卡片\n\n### 功能说明\n卡片式展示单个企业的基本信息和实时监控数据。\n\n### 数据字段\n**基本信息：**\n- 企业名称\n- 联系人 + 电话\n- 详细地址\n- 异常标签（红色）\n\n**实时指标：**\n- 接入摄像头数量\n- 今日进场（蓝色）\n- 今日出场（蓝色）\n- 异常车辆（红色）\n\n### 交互行为\n- 点击卡片 → 进入企业详情页\n- 卡片悬停 → 边框变蓝 + 阴影\n\n### 布局规范\n- 网格：2列布局\n- 圆角：rounded-xl (24px)\n- 间距：gap-4 (16px)",
-    "search-bar": "## 搜索筛选栏\n\n### 功能说明\n提供全局搜索和高级筛选功能，支持多字段模糊查询。\n\n### 交互元素\n1. **搜索框**\n   - 占位符提示搜索范围\n   - 支持实时搜索或点击查询按钮\n   - 聚焦时显示蓝色边框\n\n2. **查询按钮**\n   - Coinbase Blue pill 按钮\n   - 图标 + 文字\n\n3. **筛选按钮**\n   - 次要按钮样式\n   - 点击展开高级筛选面板\n\n### 搜索范围\n- 源头管控：企业名称、联系人、电话\n- 数据查询：车牌号、检测点、时间范围\n- 黑名单：车牌号、所属公司\n\n### 设计规范\n- 按钮：rounded-full (pill)\n- 主按钮：bg-[#0052ff]\n- 次要按钮：border-[#dee1e6]"
-  },
+  "markdownMap": {},
   "assetMap": {},
   "directory": {
     "nodes": [
@@ -116,22 +326,31 @@
         "defaultExpanded": true,
         "children": [
           {
-            "type": "markdown",
+            "type": "link",
             "id": "doc-requirements",
-            "title": "产品需求文档",
-            "markdown": "# 新余交通治超综合监管平台 - 产品需求\n\n**日期**：2026-06-08  \n**状态**：已确认\n\n## 目标用户\n- 新余交通运输局工作人员\n- 治超执法人员\n- 源头企业管理人员\n- 监控值班人员\n\n## 核心任务\n1. 监控源头企业车辆进出场情况\n2. 识别和研判遮挡号牌车辆\n3. 查询和统计超限车辆数据\n4. 实时查看监控视频\n5. 管理黑名单车辆并预警\n6. 生成治超报告\n7. 维护基础数据\n\n## 功能范围\n\n### 本次实现的12个页面\n1. **首页驾驶舱** - 综合数据展示\n2. **源头管控** - 企业列表 + 企业详情\n3. **遮挡研判** - 预警列表 + 研判详情\n4. **治超报告** - 报告生成 + 报告预览\n5. **数据查询** - 多条件查询\n6. **视频巡查** - 实时监控\n7. **黑名单管理** - 列表 + 轨迹详情\n8. **基础信息管理** - 数据维护\n\n## 设计基底\n**主题**：Coinbase 设计系统  \n**主色调**：Coinbase Blue (#0052ff)  \n**适用场景**：政务监管平台、数据密集型界面"
-          },
-          {
-            "type": "markdown",
-            "id": "doc-design-decisions",
-            "title": "设计决策说明",
-            "markdown": "# 设计决策\n\n## 采用的设计基底\n**主题**：Coinbase (`src/themes/coinbase/DESIGN.md`)\n\n**选择理由**：\n- Coinbase Blue (#0052ff) 符合政务蓝色调要求\n- 金融级专业感适合监管平台\n- 清晰的卡片式布局适合数据密集型界面\n- 成熟的数据仪表盘设计语言\n\n## 色彩系统\n\n### 主色调\n- **Coinbase Blue** (#0052ff) - 主要操作按钮、链接、强调元素\n- **白色背景** (#ffffff) - 页面背景\n\n### 语义色\n- **成功/正常** (#05b169) - 正常通行、已完成\n- **警告/超限** (#f4b000) - 超限车辆、待处理\n- **危险/预警** (#cf202f) - 黑名单、严重超限\n\n### 文本色\n- **主文本** (#0a0b0d)\n- **次要文本** (#5b616e)\n- **禁用/占位** (#a8acb3)\n\n## 组件规范\n\n### 按钮\n- **主要按钮**：Coinbase Blue 填充，白色文字，pill 圆角\n- **次要按钮**：透明背景，边框，pill 圆角\n\n### 卡片\n- **圆角**：24px (rounded-xl)\n- **边框**：1px solid #dee1e6\n- **悬停**：border-[#0052ff] + shadow-sm"
+            "title": "产品需求文档 (PRD)",
+            "href": "./.spec/2026-06-08-requirements.md",
+            "target": "blank"
           },
           {
             "type": "link",
-            "id": "link-coinbase-theme",
-            "title": "Coinbase 主题规范",
-            "href": "/themes/coinbase",
+            "id": "doc-design-decisions",
+            "title": "设计决策说明",
+            "href": "./.spec/2026-06-08-design-decisions.md",
+            "target": "blank"
+          },
+          {
+            "type": "link",
+            "id": "doc-delivery",
+            "title": "交付说明文档",
+            "href": "./.spec/DELIVERY.md",
+            "target": "blank"
+          },
+          {
+            "type": "link",
+            "id": "doc-color-optimization",
+            "title": "Coinbase 配色优化",
+            "href": "./.spec/coinbase-color-optimization.md",
             "target": "blank"
           }
         ]
@@ -151,20 +370,38 @@
           {
             "type": "route",
             "id": "route-source-control",
-            "title": "源头管控",
+            "title": "源头管控 - 企业列表",
             "route": "source-control"
           },
           {
             "type": "route",
             "id": "route-enterprise-detail",
-            "title": "企业详情",
+            "title": "源头管控 - 企业详情",
             "route": "enterprise-detail"
           },
           {
             "type": "route",
             "id": "route-plate-analysis",
-            "title": "遮挡研判",
+            "title": "遮挡研判 - 预警列表",
             "route": "plate-analysis"
+          },
+          {
+            "type": "route",
+            "id": "route-plate-detail",
+            "title": "遮挡研判 - 研判详情",
+            "route": "plate-detail"
+          },
+          {
+            "type": "route",
+            "id": "route-report",
+            "title": "治超报告 - 报告配置",
+            "route": "report"
+          },
+          {
+            "type": "route",
+            "id": "route-report-preview",
+            "title": "治超报告 - 报告预览",
+            "route": "report-preview"
           },
           {
             "type": "route",
@@ -181,8 +418,14 @@
           {
             "type": "route",
             "id": "route-blacklist",
-            "title": "黑名单管理",
+            "title": "黑名单管理 - 列表",
             "route": "blacklist"
+          },
+          {
+            "type": "route",
+            "id": "route-blacklist-detail",
+            "title": "黑名单管理 - 轨迹",
+            "route": "blacklist-detail"
           },
           {
             "type": "route",

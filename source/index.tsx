@@ -702,7 +702,7 @@ const PlateAnalysisPage: React.FC<{ onNavigate: (page: PageType) => void }> = ({
       </div>
 
       {/* 统计卡片 */}
-      <div className="grid grid-cols-4 gap-4 mb-6">
+      <div className="grid grid-cols-4 gap-4 mb-6" data-annotation-id="plate-analysis-stats">
         {[
           { label: '今日触发', value: '32', color: 'blue' },
           { label: '待处理', value: '8', color: 'yellow' },
@@ -760,7 +760,7 @@ const PlateAnalysisPage: React.FC<{ onNavigate: (page: PageType) => void }> = ({
       </div>
 
       {/* 预警列表 */}
-      <div className="bg-white rounded-xl border border-gray-200">
+      <div className="bg-white rounded-xl border border-gray-200" data-annotation-id="plate-analysis-list">
         <div className="p-6 border-b border-gray-200">
           <div className="flex items-center justify-between">
             <h3 className="text-lg font-semibold text-gray-900">遮挡号牌预警列表</h3>
@@ -869,7 +869,7 @@ const PlateDetailPage: React.FC<{ onNavigate: (page: PageType) => void }> = ({ o
       </button>
 
       {/* 基本信息 */}
-      <div className="bg-white rounded-xl border border-gray-200 p-6 mb-4">
+      <div className="bg-white rounded-xl border border-gray-200 p-6 mb-4" data-annotation-id="plate-comparison">
         <div className="flex items-start justify-between mb-4">
           <div>
             <h2 className="text-2xl font-semibold text-gray-900 mb-2">遮挡号牌研判详情</h2>
@@ -1020,7 +1020,7 @@ const ReportPage: React.FC<{ onNavigate: (page: PageType) => void }> = ({ onNavi
       </div>
 
       {/* 报告生成配置 */}
-      <div className="bg-white rounded-lg border border-slate-200 p-4 mb-6">
+      <div className="bg-white rounded-lg border border-slate-200 p-4 mb-6" data-annotation-id="report-config">
         <div className="flex items-center justify-between mb-4">
           <h3 className="text-sm font-semibold text-slate-900">生成新报告</h3>
           <button
@@ -1156,7 +1156,7 @@ const ReportPreviewPage: React.FC<{ onNavigate: (page: PageType) => void }> = ({
       </button>
 
       {/* 报告头部 */}
-      <div className="bg-white rounded-xl border border-gray-200 p-8 mb-6">
+      <div className="bg-white rounded-xl border border-gray-200 p-8 mb-6" data-annotation-id="report-preview">
         <div className="text-center mb-8">
           <h1 className="text-3xl font-bold text-gray-900 mb-2">新余市交通治超综合监管平台</h1>
           <h2 className="text-2xl font-semibold text-gray-700 mb-4">2026年5月治超月度报告</h2>
@@ -1308,7 +1308,7 @@ const DataQueryPage: React.FC<{ onNavigate: (page: PageType) => void }> = ({ onN
       </div>
 
       {/* 查询条件 */}
-      <div className="bg-white rounded-lg border border-slate-200 p-4 mb-4">
+      <div className="bg-white rounded-lg border border-slate-200 p-4 mb-4" data-annotation-id="data-query-form">
         <div className="flex items-center justify-between mb-3">
           <h3 className="text-sm font-semibold text-slate-900">查询条件</h3>
           <div className="flex gap-2">
@@ -1594,7 +1594,7 @@ const VideoPatrolPage: React.FC<{ onNavigate: (page: PageType) => void }> = ({ o
         </div>
 
         {/* 右侧视频区域 */}
-        <div className="col-span-3 bg-white rounded-xl border border-gray-200 p-4">
+        <div className="col-span-3 bg-white rounded-xl border border-gray-200 p-4" data-annotation-id="video-grid">
           <div className="mb-4 flex items-center justify-between">
             <div className="flex gap-2">
               {[1, 4, 9, 16].map((num) => (
@@ -1694,7 +1694,7 @@ const BlacklistPage: React.FC<{ onNavigate: (page: PageType) => void }> = ({ onN
       </div>
 
       {/* 黑名单列表 */}
-      <div className="bg-white rounded-xl border border-gray-200">
+      <div className="bg-white rounded-xl border border-gray-200" data-annotation-id="blacklist-table">
         <div className="p-6 border-b border-gray-200">
           <div className="flex items-center justify-between">
             <h3 className="text-lg font-semibold text-gray-900">黑名单车辆列表</h3>
@@ -1848,7 +1848,7 @@ const BlacklistDetailPage: React.FC<{ onNavigate: (page: PageType) => void }> = 
 
       <div className="grid grid-cols-3 gap-4">
         {/* 轨迹时间线 */}
-        <div className="col-span-2 bg-white rounded-xl border border-gray-200 p-6">
+        <div className="col-span-2 bg-white rounded-xl border border-gray-200 p-6" data-annotation-id="vehicle-trajectory">
           <h3 className="text-lg font-semibold text-gray-900 mb-4">车辆轨迹时间线</h3>
           <div className="space-y-4 max-h-[500px] overflow-y-auto">
             {timeline.map((item, index) => (
@@ -1936,7 +1936,7 @@ const BasicInfoPage: React.FC<{ onNavigate: (page: PageType) => void }> = ({ onN
       </div>
 
       {/* Tab 导航 */}
-      <div className="bg-white rounded-xl border border-gray-200 mb-4">
+      <div className="bg-white rounded-xl border border-gray-200 mb-4" data-annotation-id="basic-info-tabs">
         <div className="flex border-b border-gray-200">
           {[
             { key: 'vehicle', label: '车辆信息', icon: '🚛' },
